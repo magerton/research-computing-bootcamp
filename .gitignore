@@ -1,0 +1,46 @@
+# ignore project management stuff
+**/.DS_Store
+.spyproject/**
+.Rproj.user
+.Rhistory
+*.Rproj
+*.sublime-workspace
+*.sublime-project
+.Rapp.history
+
+# Python
+**/venv/**
+**.pyc
+**/__pycache__/**
+
+# Ignore scratch and tmp
+tmp/**
+scratch/**
+
+# No html
+**.html
+
+# tex files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+# ignore uncompressed CSV and dta files
+*.csv
+*.CSV
+*.dta
+
+# ignore rawdata stuff
+rawdata/*
+
+# don't ignore readmes
+!**/README.md
+
+# don't ignore any ingestion logs...
+!**/ingestion_log.out
