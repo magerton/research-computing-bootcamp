@@ -74,6 +74,9 @@ link-citations: true
 
 # Git
 
+https://hackernoon.com/a-gentle-introduction-to-git-and-github-the-eli5-way-43f0aa64f2e4
+https://www.slideshare.net/HubSpot/git-101-git-and-github-for-beginners
+
 - Resources: https://lectures.quantecon.org/jl/more_julia/version_control.html and 
 - Why version control?
 - Version control is "undo"
@@ -93,9 +96,22 @@ link-citations: true
 - Merge conflicts
 - Gitignore, License
 
+- Workflow
+    + Fork this repo on Github
+    + Clone it to your local machine
+    + Create a new branch
+    + make changes
+    + stage
+    + commit
+    + checkout master
+    + make changes, stage, commit
+    + merge / pull request
+
+
 # Data management
 
-
+https://v4.software-carpentry.org/data/index.html
+https://mariadb.com/kb/en/library/database-normalization-overview/
 
 
 
