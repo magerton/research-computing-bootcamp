@@ -1,6 +1,6 @@
 ---
 title: ~~Reproducible Research~~ **Nerd Camp**
-author: Mark Agerton
+author: Mark Agerton and Dan Mazzone
 date: 2019 September 23
 bibliography: ReproducibleResearch.bib
 csl: chicago-author-date.csl
