@@ -1,5 +1,5 @@
 ---
-title: Reproducible Research
+title: ~~Reproducible Research~~ **Nerd Camp**
 author: Mark Agerton
 date: 2019 September 23
 bibliography: ReproducibleResearch.bib
@@ -194,6 +194,31 @@ Taken from @sandve2013ten
     + `master.do`, `run_all.sh` or `MAKE` script to run all analysis
     + Name files in order of analysis `00a - download prices.R`, `00b - download shapefiles.R`
 
+# What to do with parameters?
+
+- Sometimes we re-use parameters across many files
+- What if we change them? Or have to hard-code?
+- Create `R/CONSTANTS.R` file (no redundancy!)
+
+in `R/CONSTANTS.R`
+
+```r
+update_constants <- function(grepfor, replacewith, 
+    file="R/CONSTANTS.R", update=TRUE) {
+    orig_const <- readLines(file)
+    orig_const[grep(grepfor, orig_const)] <- replacewith
+    if (update) cat(orig_const, sep="\n", file="R/CONSTANTS.R")
+    else return(orig_const)
+}
+```
+
+in script where we compute `beta` that gets used elsewhere
+
+```R
+tmptxt <- paste0("beta <- ", sprintf("%a", beta), "  #  beta = ", beta)
+update_constants("^beta", tmptxt)
+```
+
 # Staying organized with lengthy jobs on a cluster
 
 - Jobs on cluster get a unique job ID. See example SLURM script.
@@ -203,7 +228,13 @@ Taken from @sandve2013ten
 - In the log, print 
     + unique "commit hash" to log that identifies current snapshot of the codebase
     + Lots of intermediate output
-    + Print out numbers in hexadecimal format so I can restart
+    + `sprintf` numbers in hexadecimal format so I can restart
+
+```R
+commit_hash <- system('git -C . rev-parse HEAD', intern = TRUE)
+out <- paste0("\nRepo commit ", commit_hash, "\n\n")
+cat(out, file=STAT_PTH, append=T)
+```
 
 ```julia
 thet optimal (binary)  = [-0x1.9f0f1d52eece2p+1, ]
