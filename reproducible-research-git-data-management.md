@@ -1,5 +1,5 @@
 ---
-title: ~~Reproducible Research~~ **Nerd Camp**
+title: **Nerd Camp**
 author: Mark Agerton
 date: 2019 September 23
 bibliography: ReproducibleResearch.bib
