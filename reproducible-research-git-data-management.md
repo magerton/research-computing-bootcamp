@@ -9,15 +9,37 @@ link-citations: true
 fontsize: 10pt
 ---
 
+# Overview
+
+Today is about **tools** and **workflows**, not research process.
+
+We want to
+
+- To share some of the tools we use to make us more productive
+
+- Help you figure out the right tool for the job
+
+- Make it easier for you to use these tools
+
+*We are economists, not software engineers or computer scientists!*
+
+# Course materials
+
+Course materials are a public good.
+
+*Pull requests* on Github are welcome and will enhance the public good!
+
+<https://github.com/magerton/research-computing-bootcamp/>
+
 # 3 kinds of reproducibility
 
-- **Methods:** *The ability to implement, as exactly as possible, the experimental and computational procedures, with the same data and tools, to obtain the same results.*
+1. **Methods:** *The ability to implement, as exactly as possible, the experimental and computational procedures, with the same data and tools, to obtain the same results.*
 
-- Results: *obtaining the same results from the conduct of an independent study*
+2. Results: *obtaining the same results from the conduct of an independent study*
 
-- Inferential: do we interpret results from an independent or reanalysis study?
+3. Inferential: *do we interpret results from an independent or reanalysis study?*
 
-@goodman2016what
+[@goodman2016what]
 
 # Reproducible research
 
@@ -33,24 +55,31 @@ Reproducible research is about **workflow** and **sharing**
 
 # Why bother with reproducible research?
 
-1. We are scientists who (ostensibly) care about the truth, and need others to be able to verify it
+1. We are scientists who (ostensibly) care about the truth, and need others to be able to verify it (altristic).
 
-2. We can build off one another's work.
+2. We can build off one another's work (spillovers).
 
-2. Journals care about it.
+2. Journals care about it (*not* altruistic).
 
-3. It'll make your life easier (in the long run).
+3. It'll make your life easier (in the long run) (also not altruistic).
 
 
 # New AER Reproducibility Guidelines (Methods)
 
 - AER's [Data and Code Availability Policy](https://www.aeaweb.org/journals/policies/data-code)
 
-    For econometric, simulation, and experimental papers, the replication materials shall include 
+    *It is the policy of the American Economic Association to publish papers only if the data and code used in the analysis are clearly and precisely documented, and access to the data and code is clearly and precisely documented and is non-exclusive to the authors.*
+
+# More on AER guidelines
+
+- *For econometric, simulation, and experimental papers, the replication materials shall include*
 
     a. the data set(s), 
+
     b. the programs used to create any final and analysis data sets from raw data, 
+
     c. programs used to run the final models, and 
+
     d. description sufficient to allow all programs to be run.
 
 - Social Science Data Editors [Verification guidance](https://social-science-data-editors.github.io/guidance/Verification_guidance.html) and [Replication Template](https://github.com/AEADataEditor/replication-template/blob/master/REPLICATION.md)
@@ -70,7 +99,7 @@ Reproducible research is about **workflow** and **sharing**
 9. Connect Textual Statements to Underlying Results
 10. Provide Public Access to Scripts, Runs, and Results
 
-[@sandve2013ten]
+Taken from @sandve2013ten
 
 ::: notes
 
@@ -101,9 +130,11 @@ Reproducible research is about **workflow** and **sharing**
 
 # How to do this?
 
-- Gold Standard? Create entire paper with one command.
+- Gold Standard? 
 
-- *Literate programming*: Rmarkdown, Jupyter notebooks, Stata's `dyndoc`
+    + Create entire paper with one command.
+
+    + *Literate programming*: Rmarkdown, Jupyter notebooks, Stata's `dyndoc`
 
 - Usually not practical: too many files!
 
@@ -113,7 +144,7 @@ Reproducible research is about **workflow** and **sharing**
 
 2. Version control (almost) everything
 
-3. Automate as much as ~~possible~~ practical
+3. Automate as much as practical
 
 # Benefits & costs
 
@@ -145,7 +176,7 @@ Reproducible research is about **workflow** and **sharing**
 
 # Folder structure and filenames
 
-- `README.md` in every folder that might need one
+- `README.md` in every folder explains what's there
 - Save `raw_data` 
     + Ideally download programatically code
     + `README.md` documents acquisition
@@ -165,13 +196,20 @@ Reproducible research is about **workflow** and **sharing**
 
 # Staying organized with lengthy jobs on a cluster
 
-- Jobs on cluster get a unique job ID
+- Jobs on cluster get a unique job ID. See example SLURM script.
 
 - Keep a `README.md` log with *metadata* (data about data) listing job IDs
 
 - In the log, print 
     + unique "commit hash" to log that identifies current snapshot of the codebase
     + Lots of intermediate output
+    + Print out numbers in hexadecimal format so I can restart
+
+```julia
+thet optimal (binary)  = [-0x1.9f0f1d52eece2p+1, ]
+thet optimal (decimal) = [-3.2426 ]
+```
+
 
 # Resources on project management / organization
 
@@ -183,28 +221,6 @@ Reproducible research is about **workflow** and **sharing**
     + [Gentzkow and Shapiro *Lab Wiki*](https://github.com/gslab-econ/ra-manual/wiki)
     + [Gentzow and Shapiro *PDF Code and Data for the Social Sciences: A Practitioner's Guide*](https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf)
     + [Knittel and Metaxoglou (2016) *Working with Data: Two Empiricists’ Experience*](https://doi.org/10.1515/jem-2016-0001)
-
-# Dealing with data using R's `data.table`
-
-I like R's `data.table` package if $<$ 2 billion rows
-
-- Highly optimized
-    
-    + Much faster than `dplyr` if datasets are big (100k or more rows)
-
-- In-place updating
-    
-    + `dplyr` and other packages copy dataframes if you modify them
-    + Big deal if memory is an issue
-
-- Parsimonious syntax
- 
-- Tight connection to SQL
-
-- Joins
-    
-    + really fast
-    + non-equi joins: `x.date <= y.date` or rolling joins (closest-to)
 
 # What is Git?
 
@@ -345,31 +361,31 @@ git merge marks-test-branch
 
 - Create a *local* repo and then push changes to remote
     
-    ```bash
-    # new directory
-    mkdir my-first-test-repo
+```bash
+# new directory
+mkdir my-first-test-repo
 
-    # cd into it
-    cd my-first-test-repo
+# cd into it
+cd my-first-test-repo
 
-    # create readme
-    echo "# my-first-test-repo" >> README.md
-    
-    # tells git to track new repo
-    git init
+# create readme
+echo "# my-first-test-repo" >> README.md
 
-    # STAGES the file
-    git add README.md
+# tells git to track new repo
+git init
 
-    # COMMITS staged changes
-    git commit -m "first commit"
+# STAGES the file
+git add README.md
 
-    # tell git where the REMOTE repo is
-    git remote add origin https://github.com/magerton/my-first-test-repo.git
-    
-    # PUSH changes to UPSTREAM branch `master` on REMOTE `origin` 
-    git push --set-upstream origin master
-    ```
+# COMMITS staged changes
+git commit -m "first commit"
+
+# tell git where the REMOTE repo is
+git remote add origin https://github.com/magerton/my-first-test-repo.git
+
+# PUSH changes to UPSTREAM branch `master` on REMOTE `origin` 
+git push --set-upstream origin master
+```
 
 # Authentication with Github Desktop & command line
 
@@ -377,16 +393,16 @@ git merge marks-test-branch
 
 - Command line works best with `ssh`
 
-    + More from Arnon tomorro=
+    + More from Arnon tomorrow
 
     + Github [Authentication help](https://help.github.com/en/categories/authenticating-to-github)
     + To switch from `https` to `ssh`
         * See Github help on [changing a remote's URL](https://help.github.com/en/articles/changing-a-remotes-url)
 
-        ```bash
-        git remote -v
-        git remote set-url origin git@github.com:USERNAME/repository.git
-        ```
+```bash
+git remote -v
+git remote set-url origin git@github.com:USERNAME/repository.git
+```
 
 # Syncing between computers
 
@@ -394,7 +410,12 @@ git merge marks-test-branch
 
 - `pull` changes from `remote` to `local`
     
-    + `pull` = `fetch` + `git merge FETCH_HEAD`
+    + `pull` is equivalent to
+     
+        ```bash
+        fetch
+        git merge FETCH_HEAD
+        ```
 
 
 # `merge` conflicts
@@ -430,10 +451,10 @@ git merge marks-test-branch
     + Way faster
     + 1 Gb for free, $5/mo for 50 Gb
 
-    ```bash
-    git lfs track my-big-file.zip  # single file
-    git lfs track "*.zip"          # all files ending in .zip
-    ```
+```bash
+git lfs track my-big-file.zip  # single file
+git lfs track "*.zip"          # all files ending in .zip. note ""
+```
 
 
 # Project management on Github
@@ -474,7 +495,7 @@ git merge marks-test-branch
 
 - Why normalize?
     + Need less disk space
-    + Lower chance of misspelling things
+    + Lower chance of anomalies (misspellings, etc)
 
 - Merge back together
     + Multiple tables painful in Stata
@@ -516,7 +537,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 | 12    | Karbon. M.         | 431     | Leucadendron    | A    | Sandstone           |
 | 12    | Karbon. M.         | 449     | Restio          | B    | Sandstone/limestone |
 
-- This is what Stata likes
+- This is what our panels look like
 
 - *Primary Key*
     + "specific choice of a minimal set of attributes (columns) that uniquely specify a tuple (row) in a relation (table)" [Wikipedia](https://en.wikipedia.org/wiki/Primary_key)
@@ -559,12 +580,12 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 
 :::: column
 
-| PlantID | Plant nm.       |
-| ------  | --------------- |
-| 431     | Leaucadendron   |
-| 446     | Protea          |
-| 482     | Erica           |
-| 449     | Restio          |
+| PlantID | Plant nm.       | Soil |
+| ------  | --------------- |------|
+| 431     | Leaucadendron   | A    |
+| 446     | Protea          | B    |
+| 482     | Erica           | C    |
+| 449     | Restio          | B    |
 
 | Soil | Soil desc           |
 | ---- | -----------------   |
@@ -576,11 +597,31 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 
 :::
 
-- No redundancy
-- Join using *Foreign Key*: "foreign key is a set of attributes that references a candidate key" [Wikpedia](https://en.wikipedia.org/wiki/Foreign_key)
-- *Factor variables* in Stata, R or *Categorical Arrays* in Julia
+- No redundancy. *Factor variables* in Stata, R or *Categorical Arrays* in Julia
+- Join using *Foreign Key*: "a set of attributes that references a candidate key" [Wikpedia](https://en.wikipedia.org/wiki/Foreign_key)
 - *Link table* `| LocID | PlantID |` to capture many-to-many relationship
 
+# Dealing with data using R's `data.table`
+
+I like R's `data.table` package if $<$ 2 billion rows
+
+- Highly optimized
+    
+    + Much faster than `dplyr` if datasets are big (100k or more rows)
+
+- In-place updating
+    
+    + `dplyr` and other packages copy dataframes if you modify them
+    + Big deal if memory is an issue
+
+- Parsimonious syntax
+ 
+- Tight connection to SQL
+
+- Joins
+    
+    + really fast
+    + non-equi joins: `x.date <= y.date` or rolling joins (closest-to)
 
 # What do I look for in software?
 

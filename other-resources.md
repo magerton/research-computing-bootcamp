@@ -1,17 +1,31 @@
 ---
-title: Research Computing Resources
+title: Other resources
 ---
 
+# Things we didn't cover
+
+- Cloud computing: Google Compute Engine, AWS, Azure
+- Docker
+- Mathematica
+- Scraping
+    + How does your browser look at a webpage / how does the internet work? 
+    + BeautifulSoup & LXML in python? 
+    `rvest` and `httr` R packages
+- Cybersecurity
+    + Laurie on best practices
+    + Working with confidential data
+
+# Other Resources
+
 - Computational Economics
-    + Grant McDermott Course: <https://github.com/uo-ec607/lectures>
-    + Florian Oswald Course: <https://github.com/ScPo-CompEcon/Syllabus>
+    + Grant McDermott's Course: <https://github.com/uo-ec607/lectures>
+    + Florian Oswald's Course: <https://github.com/ScPo-CompEcon/Syllabus>
     + Jesús Fernández-Villaverde
         * <https://github.com/jesusfv/Comparison-Programming-Languages-Economics>
         * <https://github.com/davidzarruk/Parallel_Computing>
     + Open Source Econ Bootcamp @ Univ Chicago <https://github.com/OpenSourceEcon/BootCamp2018/tree/master/Computation#schedule>
     + [QuantEcon](https://quantecon.org/)
         * See [Python OOP introduction](https://lectures.quantecon.org/py/python_oop.html)
-
 - Reproducible & collaborative research workflows
     + [Software Carpentry](https://software-carpentry.org/)
         * [Data Carpentry Social Science Curriculum](https://datacarpentry.org/lessons/#social-science-curriculum) has R, GIS, etc
@@ -24,4 +38,3 @@ title: Research Computing Resources
         * [Gentzkow and Shapiro *Lab Wiki*](https://github.com/gslab-econ/ra-manual/wiki)
         * [Gentzow and Shapiro *PDF Code and Data for the Social Sciences: A Practitioner's Guide*](https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf)
         * [Knittel and Metaxoglou (2016) *Working with Data: Two Empiricists’ Experience*](https://doi.org/10.1515/jem-2016-0001)
-
