@@ -55,7 +55,7 @@ Reproducible research is about **workflow** and **sharing**
 
 # Why bother with reproducible research?
 
-1. We are scientists who (ostensibly) care about the truth, and need others to be able to verify it (altristic).
+1. We are scientists who (ostensibly) care about the truth, and need others to be able to verify it (altruistic).
 
 2. We can build off one another's work (spillovers).
 
