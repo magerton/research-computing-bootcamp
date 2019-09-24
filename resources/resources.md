@@ -9,10 +9,10 @@ title: Other resources
 - Mathematica
 - Scraping
     + How does your browser look at a webpage / how does the internet work? 
-    + BeautifulSoup & LXML in python? 
+    + BeautifulSoup & LXML in python 
     `rvest` and `httr` R packages
 - Cybersecurity
-    + Laurie on best practices
+    + Best practices
     + Working with confidential data
 
 # Other Resources
