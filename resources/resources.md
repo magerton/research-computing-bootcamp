@@ -24,8 +24,8 @@ title: Other resources
         * <https://github.com/jesusfv/Comparison-Programming-Languages-Economics>
         * <https://github.com/davidzarruk/Parallel_Computing>
     + Open Source Econ Bootcamp @ Univ Chicago <https://github.com/OpenSourceEcon/BootCamp2018/tree/master/Computation#schedule>
-    + [QuantEcon](https://quantecon.org/)
-        * See [Python OOP introduction](https://lectures.quantecon.org/py/python_oop.html)
+    + [QuantEcon](https://quantecon.org/) for Julia & Python
+        * See [Python object oriented programming introduction](https://lectures.quantecon.org/py/python_oop.html)
 - Reproducible & collaborative research workflows
     + [Software Carpentry](https://software-carpentry.org/)
         * [Data Carpentry Social Science Curriculum](https://datacarpentry.org/lessons/#social-science-curriculum) has R, GIS, etc
