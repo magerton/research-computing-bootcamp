@@ -284,6 +284,8 @@ thet optimal (decimal) = [-3.2426 ]
 
 - But Git has higher fixed costs
 
+- Git does NOT play well with Dropbox/Box/OneDrive/etc
+
 # Git vs Github
 
 ![](https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2017/12/gitHub.png)
@@ -465,7 +467,7 @@ git remote set-url origin git@github.com:USERNAME/repository.git
 - `.gitignore` tells Git which files not to track
 
     + LaTeX temp files, big binary files, private keys
-    + [.gitignore](.gitignore) has an example
+    + [.gitignore](../.gitignore) has an example
 
 - `LICENSE.md` tells how others can use, cite, modify, etc your work
 
