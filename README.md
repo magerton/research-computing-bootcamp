@@ -21,5 +21,6 @@ If you have forked this repo to your personal account, you can update your perso
 
 # For help on Git & Github
 
-- [Github.com's help page](https://help.github.com/en#dotcom) is great.
+- See [talk on Git and Github]https://github.com/magerton/research-computing-bootcamp/blob/master/talks/reproducible-research-git-data-management.md#what-is-git)
+- [Github.com's help page](https://help.github.com/en#dotcom) is great
 - There are TONS of git-related resources to be found via Google
