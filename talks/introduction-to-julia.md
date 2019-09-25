@@ -156,4 +156,6 @@ Clone package to `~/.julia/dev/ShaleDrillingLikelihood` or `C:\Users\username\Ap
 
 - [Julia Cheat Sheet](https://juliadocs.github.io/Julia-Cheat-Sheet/)
 
+- [Chapter on Julia by Jesús Fernández-Villaverde](https://www.sas.upenn.edu/~jesusfv/Chapter_HPC_8_Julia.pdf)
+
 # References
