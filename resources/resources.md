@@ -23,6 +23,7 @@ title: Other resources
     + Jesús Fernández-Villaverde
         * <https://github.com/jesusfv/Comparison-Programming-Languages-Economics>
         * <https://github.com/davidzarruk/Parallel_Computing>
+    + Ivan Rudik's course <https://github.com/AEM7130/SPRING2019>
     + Open Source Econ Bootcamp @ Univ Chicago <https://github.com/OpenSourceEcon/BootCamp2018/tree/master/Computation#schedule>
     + [QuantEcon](https://quantecon.org/) for Julia & Python
         * See [Python object oriented programming introduction](https://lectures.quantecon.org/py/python_oop.html)

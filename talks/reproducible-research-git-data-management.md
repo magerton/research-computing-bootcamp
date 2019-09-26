@@ -267,9 +267,15 @@ thet optimal (decimal) = [-3.2426 ]
 
 - Can merge text file versions
 
+# \#phdlife
+
+\centering
+
+![](http://phdcomics.com/comics/archive/phd101212s.gif){ height=70% }
+
 # Git
 
-![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](https://imgs.xkcd.com/comics/git_2x.png){ height=70% }
+![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](https://imgs.xkcd.com/comics/git_2x.png){ height=60% }
 
 # Git vs Dropbox
 
@@ -289,6 +295,14 @@ thet optimal (decimal) = [-3.2426 ]
 # Git vs Github
 
 ![](https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2017/12/gitHub.png)
+
+# Git resources
+
+- Ivan Rudik's [lecture](https://raw.githack.com/AEM7130/SPRING2019/master/lecture_notes/2b_git.html#1)
+
+- Grant McDermott's [lecture](https://raw.githack.com/uo-ec607/lectures/master/02-git/02-Git.html#1)
+
+- QuantEcon [lecture](https://lectures.quantecon.org/jl/more_julia/version_control.html)
 
 # Repositories vs commits
 
