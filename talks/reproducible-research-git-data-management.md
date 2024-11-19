@@ -11,6 +11,7 @@ colorlinks: true
 linkcolor: mLightBrown
 urlcolor:  mLightBrown
 citecolor: mLightBrown
+aspectratio: 169
 header-includes:
     # - \setbeamertemplate{frame numbering}[none]
     - \metroset{background=dark}
