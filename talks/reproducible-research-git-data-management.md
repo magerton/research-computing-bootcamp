@@ -1,15 +1,26 @@
 ---
-title: ~~Reproducible Research~~ **Nerd Camp**
+title: Reproducible Research
 author: Mark Agerton
-date: 2019 September 23
+date: 2024 Nov 19, ARE 202A
 bibliography: ReproducibleResearch.bib
 csl: chicago-author-date.csl
-colorlinks: true
 link-citations: true
 fontsize: 10pt
+theme: "metropolis"
+colorlinks: true
+linkcolor: mLightBrown
+urlcolor:  mLightBrown
+citecolor: mLightBrown
+header-includes:
+    # - \setbeamertemplate{frame numbering}[none]
+    - \metroset{background=dark}
+    - \setbeamercolor{frametitle}{bg=mDarkTeal,fg=mLightBrown}
 ---
 
-# Overview
+
+# Intro
+
+## Overview
 
 Today is about **tools** and **workflows**, not research process.
 
@@ -23,7 +34,7 @@ We want to
 
 *We are economists, not software engineers or computer scientists!*
 
-# Course materials
+## Course materials
 
 Course materials are a public good.
 
@@ -31,7 +42,9 @@ Course materials are a public good.
 
 <https://github.com/magerton/research-computing-bootcamp/>
 
-# 3 kinds of reproducibility
+# Reproducability
+
+## 3 kinds of reproducibility
 
 1. **Methods:** *The ability to implement, as exactly as possible, the experimental and computational procedures, with the same data and tools, to obtain the same results.*
 
@@ -41,7 +54,7 @@ Course materials are a public good.
 
 [@goodman2016what]
 
-# Reproducible research
+## Reproducible research
 
 Make the *entire research process* transparent
 
@@ -53,7 +66,7 @@ Not just regression tables. It includes
 
 Reproducible research is about **workflow** and **sharing**
 
-# Why bother with reproducible research?
+## Why bother with reproducible research?
 
 1. We are scientists who (ostensibly) care about the truth, and need others to be able to verify it (altruistic).
 
@@ -64,13 +77,13 @@ Reproducible research is about **workflow** and **sharing**
 3. It'll make your life easier (in the long run) (also not altruistic).
 
 
-# New AER Reproducibility Guidelines (Methods)
+## New AER Reproducibility Guidelines (Methods)
 
 - AER's [Data and Code Availability Policy](https://www.aeaweb.org/journals/policies/data-code)
 
     *It is the policy of the American Economic Association to publish papers only if the data and code used in the analysis are clearly and precisely documented, and access to the data and code is clearly and precisely documented and is non-exclusive to the authors.*
 
-# More on AER guidelines
+## More on AER guidelines
 
 - *For econometric, simulation, and experimental papers, the replication materials shall include*
 
@@ -86,9 +99,9 @@ Reproducible research is about **workflow** and **sharing**
 
 <!-- - "Top 10 list of papers on reproducible research" [@barba2017barbagroup] -->
 
-# Ten Simple Rules for Reproducible Computational Research
+## Ten Simple Rules for Reproducible Computational Research
 
-1. For Every Result, Keep Track of How It Was Produced
+<!-- 1. For Every Result, Keep Track of How It Was Produced
 2. Avoid Manual Data Manipulation Steps
 3. Archive the Exact Versions of All External Programs Used
 4. Version Control All Custom Scripts
@@ -101,44 +114,48 @@ Reproducible research is about **workflow** and **sharing**
 
 Taken from @sandve2013ten
 
-::: notes
+::: notes -->
+
+See @sandve2013ten
 
 1. For Every Result, Keep Track of How It Was Produced
     + Notion of "workflow"... from raw data to final table
 2. Avoid Manual Data Manipulation Steps
     + Excel is evil
 3. Archive the Exact Versions of All External Programs Used
-    + Python virtualenv, R's packrat, Julia Pkg all help here
+    + Python `virtualenv`, R's ~~packrat~~ `renv`, Julia's `[Project/Manifest].toml` all help here
     + Also hardware
 4. Version Control All Custom Scripts
     + Git!!!
 5. Record All Intermediate Results, When Possible in Standardized Formats
     + Show my example from SLURM
+
+## Ten simple rules, continued
+
 6. For Analyses That Include Randomness, Note Underlying Random Seeds
-    + duh
 7. Always Store Raw Data behind Plots
     + Plots & tables should be generated from files
 8. Generate Hierarchical Analysis Output, Allowing Layers of Increasing Detail to Be Inspected
-    + ??
 9. Connect Textual Statements to Underlying Results
     + For each statement, where did it come from? Cite the source or note your data
 10. Provide Public Access to Scripts, Runs, and Results
     + Github?
-    + AER data site
+    + AER data site, Harvard Dataverse
 
-:::
 
-# How to do this?
+## How to do this?
 
 - Gold Standard? 
 
-    + Create entire paper with one command.
+    + Create entire paper with one command. (Jay will talk about `Make`)
 
     + *Literate programming*: Rmarkdown, Jupyter notebooks, Stata's `dyndoc`
 
 - Usually not practical: too many files!
 
-# Mark's strategy
+# Nuts and bolts of my projects
+
+## Mark's strategy
 
 1. Document everything
 
@@ -146,7 +163,7 @@ Taken from @sandve2013ten
 
 3. Automate as much as practical
 
-# Benefits & costs
+## Benefits & costs
 
 - On the plus side
 
@@ -159,7 +176,7 @@ Taken from @sandve2013ten
     + Higher fixed costs
     + Co-authors grumpy about new software
 
-# Starting a new project
+## Starting a new project
 
 - Everything lives in one folder
 
@@ -174,15 +191,15 @@ Taken from @sandve2013ten
     + Future-proofed
     + Searchable from command line, Sublime Text
 
-# Folder structure and filenames
+## Folder structure and filenames
 
 - `README.md` in every folder explains what's there
-- Save `raw_data` 
+- Save `data-raw` 
     + Ideally download programatically code
     + `README.md` documents acquisition
     + Save md5 hash of data
     + Don't ever modify it!
-- `intermediate_data`
+- `data-intermediate`
     + Processed data
 - `writeup`
     + `paper/` has .tex files
@@ -194,7 +211,7 @@ Taken from @sandve2013ten
     + `master.do`, `run_all.sh` or `MAKE` script to run all analysis
     + Name files in order of analysis `00a - download prices.R`, `00b - download shapefiles.R`
 
-# What to do with parameters?
+## What to do with parameters?
 
 - Sometimes we re-use parameters across many files
 - What if we change them? Or have to hard-code?
@@ -219,7 +236,17 @@ tmptxt <- paste0("beta <- ", sprintf("%a", beta), "  #  beta = ", beta)
 update_constants("^beta", tmptxt)
 ```
 
-# Staying organized with lengthy jobs on a cluster
+## Can also create a `parameters.tex` file and use `SIunitx`
+
+Write out parameters to `parameters.tex` as newcommand
+
+- `\newcommand{\ChamberCount}{62}`
+
+- In LaTeX, `\qty[round-mode=figures, round-precision=2]{\LeakContractActual}{\grams\per\second}` or `\ChamberCount{}`
+
+- SIunitx can handle rounding
+
+## Staying organized with lengthy jobs on a cluster
 
 - Jobs on cluster get a unique job ID. See example SLURM script.
 
@@ -241,8 +268,7 @@ thet optimal (binary)  = [-0x1.9f0f1d52eece2p+1, ]
 thet optimal (decimal) = [-3.2426 ]
 ```
 
-
-# Resources on project management / organization
+## Resources on project management / organization
 
 - Software Carpentry [Data Management](https://v4.software-carpentry.org/data/mgmt.html) lesson
 
@@ -253,7 +279,36 @@ thet optimal (decimal) = [-3.2426 ]
     + [Gentzow and Shapiro *PDF Code and Data for the Social Sciences: A Practitioner's Guide*](https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf)
     + [Knittel and Metaxoglou (2016) *Working with Data: Two Empiricists’ Experience*](https://doi.org/10.1515/jem-2016-0001)
 
-# What is Git?
+# AI
+
+## Generative AI in research
+
+- I started using Claude.ai a lot
+- Great when I have done original/creative thinking and need help with routine things: cutting/processing/coding
+- Use a "project" so I can upload a bunch of documents
+- Formula for a prompt
+    - "Hi, I'm an economist doing XXXXXX. "
+    - "In project knowledge, I have uploaded XXXXXX"
+    - "Please do XXXXXX and create an ***artifact*** with your results"
+    - "***Before you start, do you have any questions?***"
+- Use cases
+    - Shorten abstract, ARE update, paper intro
+    - Port a clustering algorithm to a new language & create unit tests based on peer reviewed paper + examples
+    - Help me grind through tedious algebra for a model written in LaTeX
+    - ReFormat LaTeX table
+    - Summarize rules in the Federal Register
+    - Make a `makefile` from a project repo
+    - Write an abstract as a Shakespearan soliloquy
+
+## Example AI prompt
+
+You are a quiz creator of highly diagnostic quizzes. You will make good, low-stakes tests and diagnostics. You will then ask me two questions: what, specifically, the quiz should test, and what audience the quiz is for. Once you have my answers you will construct several multiple-choice questions to quiz the audience on that topic. The questions should be highly relevant and go beyond just facts. Multiple-choice questions should include plausible, competitive alternate responses and should not include an ‘all of the above’ option. At the end of the quiz, you will provide an answer key and explain the right answer.
+
+Source: [HBS newsletter](https://hbsp.harvard.edu/inspiring-minds/4-simple-ways-to-integrate-ai-into-your-class?cid=email%7Cmarketo%7C2024-11-19-the-faculty-lounge%7C1249929%7Cfaculty-lounge-newsletter%7Ceducator%7Cvarious%7Cnov2024&acctID=1249929&mkt_tok=ODU1LUFUWi0yOTQAAAGW40aKaoxpFNk7wXpzZsGgG3N8e03JP-j0G7V95dDgjH0UkD2Gc11CD-eMZR-RmpK0FXyGduJ7LObPbw-MnaRF7ozU9DGPuA4zbCwx-B4jsXoQ)
+
+# Git
+
+## What is Git?
 
 - A program that keeps track of file histories
 
@@ -267,17 +322,17 @@ thet optimal (decimal) = [-3.2426 ]
 
 - Can merge text file versions
 
-# \#phdlife
+## \#phdlife
 
 \centering
 
 ![](http://phdcomics.com/comics/archive/phd101212s.gif){ height=70% }
 
-# Git
+## Git
 
 ![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](https://imgs.xkcd.com/comics/git_2x.png){ height=60% }
 
-# Git vs Dropbox
+## Git vs Dropbox
 
 - Dropbox is better than nothing
 
@@ -292,11 +347,11 @@ thet optimal (decimal) = [-3.2426 ]
 
 - Git does NOT play well with Dropbox/Box/OneDrive/etc
 
-# Git vs Github
+## Git vs Github
 
 ![](https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2017/12/gitHub.png)
 
-# Git resources
+## Git resources
 
 - Ivan Rudik's [lecture](https://raw.githack.com/AEM7130/SPRING2019/master/lecture_notes/2b_git.html#1)
 
@@ -304,7 +359,7 @@ thet optimal (decimal) = [-3.2426 ]
 
 - QuantEcon [lecture](https://lectures.quantecon.org/jl/more_julia/version_control.html)
 
-# Repositories vs commits
+## Repositories vs commits
 
 - **Repository**: folder where the entire history is tracked (*repo*)
 
@@ -324,7 +379,8 @@ thet optimal (decimal) = [-3.2426 ]
     + Adds extra functionality, project management
     + Great [education discount](https://education.github.com/pack)
 
-# What I'll show you today
+
+## What I'll show you today
 
 - Git GUIs
 
@@ -334,7 +390,7 @@ thet optimal (decimal) = [-3.2426 ]
 
 - Can also use command line, esp. for complicated situations
 
-# Workflow: Fork + Clone a repo
+## Workflow: Fork + Clone a repo
 
 - Go to <https://github.com/magerton/research-computing-bootcamp.git>
 
@@ -349,92 +405,92 @@ thet optimal (decimal) = [-3.2426 ]
     git clone https://github.com/[USERNAME]/research-computing-bootcamp.git
     ```
 
-# Branches
+## Branches
 
 - Branches are sets of commits
 
-- Keep `master` branch with functioning code 
+- Keep `main` branch with functioning code 
 
 - Develop new features on *branches*
 
-- When done, *merge* branches back to `master`
+- When done, *merge* branches back to `main`
 
 ![](https://wac-cdn.atlassian.com/dam/jcr:83323200-3c57-4c29-9b7e-e67e98745427/Branch-1.png?cdnVersion=jt){ height=50% }
 
-# Workflow: Switching branches
+## Workflow: Switching branches
 
 ```bash
-# change working directory to new repo
+## change working directory to new repo
 cd my-first-test-repo
 
-# add `-b` flag to create new branch
+## add `-b` flag to create new branch
 git checkout marks-test-branch
 ```
 
-# Workflow: staging changes + adding commit
+## Workflow: staging changes + adding commit
 
 ```bash
-# make a new file
+## make a new file
 echo "do Actually Relevant Econ" > note-to-self.md
 
-# see changes
+## see changes
 git status
 git diff
 
-# stage changes
+## stage changes
 git add *.md     # markdown files
 git add -u       # tracked files
 git add --all    # all files
 
 git commit -m "Note to self" -m "About how econ is great"
 
-# PUSH changes to remote
+## PUSH changes to remote
 git push
 ```
 
-# Workflow: `checkout` branch and `merge` branches
+## Workflow: `checkout` branch and `merge` branches
 
 ```bash
-# Switch back to master
-git checkout master
+## Switch back to master
+git checkout main
 
-# Merge in changes from `marks-test-branch` to current branch
+## Merge in changes from `marks-test-branch` to current branch
 git merge marks-test-branch
 ```
 
-# Workflow: Create a repo
+## Workflow: Create a repo
 
 - Make a new *private* repo on Github (remote): [github.com/new](https://github.com/new)
 
 - Create a *local* repo and then push changes to remote
     
 ```bash
-# new directory
+## new directory
 mkdir my-first-test-repo
 
-# cd into it
+## cd into it
 cd my-first-test-repo
 
-# create readme
+## create readme
 echo "# my-first-test-repo" >> README.md
 
-# tells git to track new repo
+## tells git to track new repo
 git init
 
-# STAGES the file
+## STAGES the file
 git add README.md
 
-# COMMITS staged changes
+## COMMITS staged changes
 git commit -m "first commit"
 
-# tell git where the REMOTE repo is
+## tell git where the REMOTE repo is
 git remote add origin https://github.com/magerton/my-first-test-repo.git
 
-# PUSH changes to UPSTREAM branch `master` on REMOTE `origin` 
-git push --set-upstream origin master
+## PUSH changes to UPSTREAM branch `main` on REMOTE `origin` 
+git push --set-upstream origin main
 ```
 
-# Authentication with Github Desktop & command line
+## Authentication with Github Desktop & command line
 
 - Github Desktop uses `https`-based authentication
 
@@ -451,7 +507,7 @@ git remote -v
 git remote set-url origin git@github.com:USERNAME/repository.git
 ```
 
-# Syncing between computers
+## Syncing between computers
 
 - `push` changes to the `remote`
 
@@ -465,14 +521,14 @@ git remote set-url origin git@github.com:USERNAME/repository.git
         ```
 
 
-# `merge` conflicts
+## `merge` conflicts
 
-![](http://www.cs.utsa.edu/~cs3443/git/merge-conflict.png){ height=40% }
+![](https://images.datacamp.com/image/upload/v1652028749/image1_d21db326e6.png){ height=40% }
 
-- Resolve in text editor ([Atom](https://atom.io/) is great for this!)
+- Resolve in text editor (Microsoft VS Code is great for this!)
 
 
-# Important files
+## Important files
 
 - `README.md` is for readers
     
@@ -485,7 +541,7 @@ git remote set-url origin git@github.com:USERNAME/repository.git
 
 - `LICENSE.md` tells how others can use, cite, modify, etc your work
 
-# What to do about binary files?
+## What to do about binary files?
 
 - Git is fantastic for tracking text files (.txt, .tex, .md, .R, .do, .py, .jl, .m)
 
@@ -504,7 +560,7 @@ git lfs track "*.zip"          # all files ending in .zip. note ""
 ```
 
 
-# Project management on Github
+## Project management on Github
 
 - Permissions: who has the right to `push` to the repo?
     
@@ -515,23 +571,25 @@ git lfs track "*.zip"          # all files ending in .zip. note ""
     + Can reference issues in commit messages
     + Can tag other users
 
-# Organizing data
+## Organizing data
 
 - What I've started doing
 
-    + Save raw data into `./raw_data/`, with README.md on how to get it
+    + Save raw data into `./data-raw/`, with README.md on how to get it
 
     + Ingest data *programatically* 
         * *Normalize* data as much as feasible. Redundancy is evil!
-        * Save to `./intermediate_data/`
+        * Save to `./data-intermediate/`
 
     + Further processing
 
-        * Ideally, save to `./final_data/` (I don't... ![](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/flushed-face_1f633.png){ width=3% })
+        <!-- * Ideally, save to `./data-clean/` (I don't... ![](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/flushed-face_1f633.png){ width=3% }) -->
 
 - If data are huge, interesting guide on [Software Carpentry](https://v4.software-carpentry.org/data/index.html)
 
-# How I (try) to think about data
+# Data management
+
+## How I (try) to think about data
 
 - Based on relational database theory
 
@@ -548,7 +606,7 @@ git lfs track "*.zip"          # all files ending in .zip. note ""
     + Multiple tables painful in Stata
     + Easier with R (`dplyr` or my favorite, `data.table`)
 
-# Normalizing data: Suppose you get this Excel spreadsheet
+## Normalizing data: Suppose you get this Excel spreadsheet
 
 | LocID | Loc. nm.           | PlantID | Plant nm.       | Soil | Soil desc           |
 | ----- | ------------------ | ------  | --------------- | ---- | -----------------   |
@@ -560,7 +618,7 @@ git lfs track "*.zip"          # all files ending in .zip. note ""
 
 Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalization-overview/)
 
-# Trying to create a table....
+## Trying to create a table....
 
 | LocID  | Loc. nm.           | PlantID | Plant nm.       | Soil | Soil desc           |
 | -----  | ------------------ | ------  | --------------- | ---- | -----------------   |
@@ -574,7 +632,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 - Rows 4--5 from another
 - How do you reference a row?
 
-# Each record needs to stand alone
+## Each record needs to stand alone
 
 | LocID | Loc. nm.           | PlantID | Plant nm.       | Soil | Soil desc           |
 | ----- | ------------------ | ------  | --------------- | ---- | -----------------   |
@@ -591,7 +649,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
     + Here: `Loc.` AND `Plant` form a *composite* primary key
     + Could also be an ID number (row number?)
 
-# Why is this not great?
+## Why is this not great?
 
 | LocID | Loc. nm.           | PlantID | Plant nm.       | Soil | Soil desc           |
 | ----- | ------------------ | ------  | --------------- | ---- | -----------------   |
@@ -604,7 +662,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 1. Table stores redundant information: *LocID* AND *Loc nm*
 2. Misspellings!
 
-# Removing the fields not dependent on the entire key
+## Removing the fields not dependent on the entire key
 
 ::: columns
 
@@ -648,7 +706,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 - Join using *Foreign Key*: "a set of attributes that references a candidate key" [Wikpedia](https://en.wikipedia.org/wiki/Foreign_key)
 - *Link table* `| LocID | PlantID |` to capture many-to-many relationship
 
-# Dealing with data using R's `data.table`
+## Dealing with data using R's `data.table`
 
 I like R's `data.table` package if $<$ 2 billion rows
 
@@ -670,7 +728,9 @@ I like R's `data.table` package if $<$ 2 billion rows
     + really fast
     + non-equi joins: `x.date <= y.date` or rolling joins (closest-to)
 
-# What do I look for in software?
+# Software
+
+## What do I look for in software?
 
 - Cross-platform
 
@@ -689,7 +749,38 @@ I like R's `data.table` package if $<$ 2 billion rows
 
 - Git, Github Desktop
 - [Zotero](https://www.zotero.org/download/) for bibliography (can share with people via [Groups](https://www.zotero.org/groups/))
-- [Sublime Text 3](https://www.sublimetext.com/3) for everything else
+- [Sublime Text 3](https://www.sublimetext.com/3) or [VS Code](https://code.visualstudio.com) for everything else
+
+## Example
+
+```R
+update_or_add_to_file <- function(grepfor, replacewith, file="parameters.tex", update=TRUE) {
+  # Read the file contents
+  original_constants <- readLines(file, warn = FALSE)
+  
+  # Create the exact string to search for (without regex)
+  search_string <- paste0("\\newcommand{\\", grepfor, "}")
+  
+  # Search for the exact line using fixed = TRUE
+  linenos <- grep(search_string, original_constants, fixed = TRUE)
+  
+  # If the command is found, update the line, otherwise append
+  if (length(linenos) == 0) {
+    # Command doesn't exist, append the new line
+    cat(replacewith, file = file, append = TRUE, sep = "\n")
+  } else {
+    # Command exists, replace it in the correct line
+    original_constants[linenos] <- replacewith
+    # Write the updated contents back to the file
+    writeLines(original_constants, file)
+  }
+  
+  # Optionally return the updated content for verification
+  invisible(original_constants)
+}
+```
 
 # References
+
+## References
 
