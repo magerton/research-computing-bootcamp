@@ -1,5 +1,8 @@
 Welcome to the UC Davis ARE *Research Computing Bootcamp* Repo!
 
+- Talk updated on 2024-11-19 for ARE 202A guest lecture. Also, see [slides](https://github.com/jaysayre/ResearchTools) from @jaysayre about VS Code/Copilot, Makefiles, and GenAI in research
+
+
 # What's in this repo
 
 - [agenda.md](./agenda.md) has the bootcamp's agenda
