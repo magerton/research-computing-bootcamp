@@ -1,7 +1,6 @@
 ---
 title: Reproducible Research
 author: Mark Agerton
-date: 2024 Nov 19, ARE 202A
 bibliography: ReproducibleResearch.bib
 csl: chicago-author-date.csl
 link-citations: true
@@ -51,7 +50,7 @@ Course materials are a public good.
 
 2. Results: *obtaining the same results from the conduct of an independent study*
 
-3. Inferential: *do we interpret results from an independent or reanalysis study?*
+3. Inferential: *do we interpret results from an independent or reanalysis study in same way?*
 
 [@goodman2016what]
 
@@ -83,6 +82,8 @@ Reproducible research is about **workflow** and **sharing**
 - AER's [Data and Code Availability Policy](https://www.aeaweb.org/journals/policies/data-code)
 
     *It is the policy of the American Economic Association to publish papers only if the data and code used in the analysis are clearly and precisely documented, and access to the data and code is clearly and precisely documented and is non-exclusive to the authors.*
+
+- If you have proprietary data, tell the editor this in your cover letter!
 
 ## More on AER guidelines
 
@@ -124,7 +125,7 @@ See @sandve2013ten
 2. Avoid Manual Data Manipulation Steps
     + Excel is evil
 3. Archive the Exact Versions of All External Programs Used
-    + Python `virtualenv`, R's ~~packrat~~ `renv`, Julia's `[Project/Manifest].toml` all help here
+    + Python `virtualenv`, R's ~~packrat~~ `renv`, Julia's `[Project/Manifest].toml`, Stata `require.ado` all help here
     + Also hardware
 4. Version Control All Custom Scripts
     + Git!!!
@@ -135,30 +136,29 @@ See @sandve2013ten
 
 6. For Analyses That Include Randomness, Note Underlying Random Seeds
 7. Always Store Raw Data behind Plots
-    + Plots & tables should be generated from files
+    + Generate plots & tables programatically
 8. Generate Hierarchical Analysis Output, Allowing Layers of Increasing Detail to Be Inspected
 9. Connect Textual Statements to Underlying Results
     + For each statement, where did it come from? Cite the source or note your data
 10. Provide Public Access to Scripts, Runs, and Results
-    + Github?
-    + AER data site, Harvard Dataverse
+    + Github, AER data site, Harvard Dataverse, etc
 
 
 ## How to do this?
 
 - Gold Standard? 
 
-    + Create entire paper with one command. (Jay will talk about `Make`)
+    + Create entire paper with one command. (Jay will talk about `Make`, which I have started using)
 
     + *Literate programming*: Rmarkdown, Jupyter notebooks, Stata's `dyndoc`
 
-- Usually not practical: too many files!
+- At minimum, list of scripts you can run in order
 
 # Nuts and bolts of my projects
 
 ## Mark's strategy
 
-1. Document everything
+1. Document everything (bad about this, getting better with Github issues)
 
 2. Version control (almost) everything
 
@@ -181,7 +181,7 @@ See @sandve2013ten
 
 - Everything lives in one folder
 
-- Sublime Text and R projects
+- IDE/Editor **project** file: Sublime, VS Code, Rstudio
 
 - Track everything with Git
 
@@ -192,13 +192,15 @@ See @sandve2013ten
     + Future-proofed
     + Searchable from command line, Sublime Text
 
-## Folder structure and filenames
+- Very large data - store on Box/Dropbox. 
+
+## Folder structure and filenames {.allowframebreaks}
 
 - `README.md` in every folder explains what's there
 - Save `data-raw` 
-    + Ideally download programatically code
-    + `README.md` documents acquisition
-    + Save md5 hash of data
+    + Ideally download programatically
+    + `README.md` documents acquisition (URL, date downloaded)
+    + Save md5 hash of data (I forget to do this)
     + Don't ever modify it!
 - `data-intermediate`
     + Processed data
@@ -209,18 +211,18 @@ See @sandve2013ten
     + `tables/`
     + various notes
 - `code`
-    + `master.do`, `run_all.sh` or `MAKE` script to run all analysis
-    + Name files in order of analysis `00a - download prices.R`, `00b - download shapefiles.R`
+    + `main.do`, `run_all.sh` or `MAKE` script to run all analysis
+    + Name files in order of analysis `00a - download prices.R`, `00b - download shapefiles.R`. Number is stage of analysis (00: download, 01: ingest + subset, etc). Letter is order within this.  
 
 ## What to do with parameters?
 
 - Sometimes we re-use parameters across many files
 - What if we change them? Or have to hard-code?
-- Create `R/CONSTANTS.R` file (no redundancy!)
+- Create `R/CONSTANTS.R` file (no redundancy!) and `source("R/CONSTANTS.R")`
 
-in `R/CONSTANTS.R`
+## R code for updating parameters
 
-```r
+```
 update_constants <- function(grepfor, replacewith, 
     file="R/CONSTANTS.R", update=TRUE) {
     orig_const <- readLines(file)
@@ -232,9 +234,9 @@ update_constants <- function(grepfor, replacewith,
 
 in script where we compute `beta` that gets used elsewhere
 
-```R
-tmptxt <- paste0("beta <- ", sprintf("%a", beta), "  #  beta = ", beta)
-update_constants("^beta", tmptxt)
+```
+paste0("beta <- ", sprintf("%a", beta), "  #  beta = ", beta) %>%
+    update_constants("^beta", .)
 ```
 
 ## Can also create a `parameters.tex` file and use `SIunitx`
@@ -284,28 +286,18 @@ thet optimal (decimal) = [-3.2426 ]
 
 ## Generative AI in research
 
-- I started using Claude.ai a lot
-- Great when I have done original/creative thinking and need help with routine things: cutting/processing/coding
-- Use a "project" so I can upload a bunch of documents
-- Formula for a prompt
-    - "Hi, I'm an economist doing XXXXXX. "
-    - "In project knowledge, I have uploaded XXXXXX"
-    - "Please do XXXXXX and create an ***artifact*** with your results"
-    - "***Before you start, do you have any questions?***"
-- Use cases
-    - Shorten abstract, ARE update, paper intro
-    - Port a clustering algorithm to a new language & create unit tests based on peer reviewed paper + examples
-    - Help me grind through tedious algebra for a model written in LaTeX
-    - ReFormat LaTeX table
-    - Summarize rules in the Federal Register
-    - Make a `makefile` from a project repo
-    - Write an abstract as a Shakespearan soliloquy
+- I like Claude.ai
 
-## Example AI prompt
+- Constant struggle: short vs long-run efficiency
 
-You are a quiz creator of highly diagnostic quizzes. You will make good, low-stakes tests and diagnostics. You will then ask me two questions: what, specifically, the quiz should test, and what audience the quiz is for. Once you have my answers you will construct several multiple-choice questions to quiz the audience on that topic. The questions should be highly relevant and go beyond just facts. Multiple-choice questions should include plausible, competitive alternate responses and should not include an ‘all of the above’ option. At the end of the quiz, you will provide an answer key and explain the right answer.
+- Who's in charge? 
 
-Source: [HBS newsletter](https://hbsp.harvard.edu/inspiring-minds/4-simple-ways-to-integrate-ai-into-your-class?cid=email%7Cmarketo%7C2024-11-19-the-faculty-lounge%7C1249929%7Cfaculty-lounge-newsletter%7Ceducator%7Cvarious%7Cnov2024&acctID=1249929&mkt_tok=ODU1LUFUWi0yOTQAAAGW40aKaoxpFNk7wXpzZsGgG3N8e03JP-j0G7V95dDgjH0UkD2Gc11CD-eMZR-RmpK0FXyGduJ7LObPbw-MnaRF7ozU9DGPuA4zbCwx-B4jsXoQ)
+- Great when I have done original/creative thinking and need help with routine things: cutting/processing/tables/graphs
+- LLM product often inferior and smells like AI... or has errors
+- Really important: use a "project" with instructions, or claude code with `CLAUDE.md` file
+- Instructions need to be specific. "Before you start, do you have any questions?"
+
+- Examples: ARE 155, flaring congestion
 
 # Git
 
@@ -327,11 +319,15 @@ Source: [HBS newsletter](https://hbsp.harvard.edu/inspiring-minds/4-simple-ways-
 
 \centering
 
-![](http://phdcomics.com/comics/archive/phd101212s.gif){ height=70% }
+<!-- ![](http://phdcomics.com/comics/archive/phd101212s.gif){ height=70% } -->
+![](figures/phd101212s.gif){ height=70% }
 
 ## Git
 
-![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](https://imgs.xkcd.com/comics/git_2x.png){ height=60% }
+<!-- ![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](https://imgs.xkcd.com/comics/git_2x.png){ height=60% } -->
+
+![*If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git. Just wait through a few minutes of 'It's really pretty simple, just think of branches as...' and eventually you'll learn the commands that will fix everything.*](figures/git_2x.png){ height=60% }
+
 
 ## Git vs Dropbox
 
@@ -350,15 +346,18 @@ Source: [HBS newsletter](https://hbsp.harvard.edu/inspiring-minds/4-simple-ways-
 
 ## Git vs Github
 
-![](https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2017/12/gitHub.png)
+<!-- ![](https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2017/12/gitHub.png) -->
+
+![](figures/gitHub.png)
+
 
 ## Git resources
 
-- Ivan Rudik's [lecture](https://raw.githack.com/AEM7130/SPRING2019/master/lecture_notes/2b_git.html#1)
+- Ivan Rudik's [lecture]https://github.com/AEM7130/class-repo/blob/master/lecture-notes/03-git/03-git.pdf)
 
 - Grant McDermott's [lecture](https://raw.githack.com/uo-ec607/lectures/master/02-git/02-Git.html#1)
 
-- QuantEcon [lecture](https://lectures.quantecon.org/jl/more_julia/version_control.html)
+- QuantEcon [lecture](https://julia.quantecon.org/software_engineering/version_control.html)
 
 ## Repositories vs commits
 
@@ -416,7 +415,10 @@ Source: [HBS newsletter](https://hbsp.harvard.edu/inspiring-minds/4-simple-ways-
 
 - When done, *merge* branches back to `main`
 
-![](https://wac-cdn.atlassian.com/dam/jcr:83323200-3c57-4c29-9b7e-e67e98745427/Branch-1.png?cdnVersion=jt){ height=50% }
+<!-- ![](https://wac-cdn.atlassian.com/dam/jcr:83323200-3c57-4c29-9b7e-e67e98745427/Branch-1.png?cdnVersion=jt){ height=50% } -->
+
+![](figures/Branch-1.png){ height=50% }
+
 
 ## Workflow: Switching branches
 
@@ -459,7 +461,7 @@ git checkout main
 git merge marks-test-branch
 ```
 
-## Workflow: Create a repo
+## Workflow: Create a repo {.allowframebreaks}
 
 - Make a new *private* repo on Github (remote): [github.com/new](https://github.com/new)
 
@@ -524,7 +526,10 @@ git remote set-url origin git@github.com:USERNAME/repository.git
 
 ## `merge` conflicts
 
-![](https://images.datacamp.com/image/upload/v1652028749/image1_d21db326e6.png){ height=40% }
+<!-- ![](https://images.datacamp.com/image/upload/v1652028749/image1_d21db326e6.png){ height=40% } -->
+
+![](figures/image1_d21db326e6.png){ height=40% }
+
 
 - Resolve in text editor (Microsoft VS Code is great for this!)
 
@@ -663,7 +668,7 @@ Example from [MariaDB.com](https://mariadb.com/kb/en/library/database-normalizat
 1. Table stores redundant information: *LocID* AND *Loc nm*
 2. Misspellings!
 
-## Removing the fields not dependent on the entire key
+## Removing the fields not dependent on the entire key {.allowframebreaks}
 
 ::: columns
 
@@ -731,7 +736,7 @@ I like R's `data.table` package if $<$ 2 billion rows
 
 # Software
 
-## What do I look for in software?
+## What do I look for in software? {.allowframebreaks}
 
 - Cross-platform
 
@@ -756,28 +761,16 @@ I like R's `data.table` package if $<$ 2 billion rows
 
 ```R
 update_or_add_to_file <- function(grepfor, replacewith, file="parameters.tex", update=TRUE) {
-  # Read the file contents
-  original_constants <- readLines(file, warn = FALSE)
-  
-  # Create the exact string to search for (without regex)
-  search_string <- paste0("\\newcommand{\\", grepfor, "}")
-  
-  # Search for the exact line using fixed = TRUE
-  linenos <- grep(search_string, original_constants, fixed = TRUE)
-  
-  # If the command is found, update the line, otherwise append
+  original_constants <- readLines(file, warn = FALSE) # read file
+  search_string <- paste0("\\newcommand{\\", grepfor, "}") # find command
+  linenos <- grep(search_string, original_constants, fixed = TRUE) # search
   if (length(linenos) == 0) {
-    # Command doesn't exist, append the new line
-    cat(replacewith, file = file, append = TRUE, sep = "\n")
+    cat(replacewith, file = file, append = TRUE, sep = "\n") # append if not found
   } else {
-    # Command exists, replace it in the correct line
-    original_constants[linenos] <- replacewith
-    # Write the updated contents back to the file
-    writeLines(original_constants, file)
-  }
-  
-  # Optionally return the updated content for verification
-  invisible(original_constants)
+    original_constants[linenos] <- replacewith # replace
+    writeLines(original_constants, file) # update file
+  }  
+  invisible(original_constants) # return orig const
 }
 ```
 
